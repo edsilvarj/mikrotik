@@ -26,3 +26,7 @@ ip route add dst-address=0.0.0.0/0 gateway=200.20.0.1 distance=1
 
 #Internet
 ip firewall nat add chain=srcnat out-interface=LINK action=masquerade
+
+
+#Security Configurations
+/ip dns set allow-remote-requests=no
