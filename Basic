@@ -30,3 +30,9 @@ ip firewall nat add chain=srcnat out-interface=LINK action=masquerade
 
 #Security Configurations
 /ip dns set allow-remote-requests=no
+/ip service set [find name=telnet] disabled=yes
+/ip service print
+/tool mac-server ping set enabled=no
+/tool mac-server ping print
+
+
