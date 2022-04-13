@@ -1,0 +1,28 @@
+#Set Interfaces (*)
+interface set ether1-gateway name=LINK
+interface set ethet2 name=LAN
+
+#Set IP
+ip address add address=200.20.0.2 netmask=255.255.255.252 interface=LINK
+ip address add address=172.16.0.1 netmask=255.255.255.240 interface=LAN
+
+
+ip dns set servers=8.8.8.8,8.8.4.4 allow-remote-requests=no
+
+#Check
+ip address print
+ip route print
+ip dns print
+
+#Configure Range Pool
+ip pool add name=pool-mesh ranges=172.16.0.2-172.16.0.14
+
+#DHCP Server
+ip dhcp-server add name=dhcp-lan address-pool=pool-mesh interface=LAN disable=no
+ip dhcp-server network add address=172.16.0.0/28 gateway=172.16.0.1
+
+#Route
+ip route add dst-address=0.0.0.0/0 gateway=200.20.0.1 distance=1
+
+#Internet
+ip firewall nat add chain=srcnat out-interface=LINK action=masquerade
